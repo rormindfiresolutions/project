@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Kirana Store</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <%= csrf_meta_tags %>
+</head>
+<body class="skin-black">
+  
+  <header id="header"><!--header-->
+  <div class="header_top"><!--header_top-->
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-6 ">
+          <div class="contactinfo">
+            <ul class="nav nav-pills">
+              <li><a href=""><i class="fa fa-phone"></i> +2 95 01 88 821</a></li>
+              <li><a href=""><i class="fa fa-envelope"></i> info@domain.com</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <div class="social-icons pull-right">
+            <ul class="nav navbar-nav">
+              <li><a href=""><i class="fa fa-facebook"></i></a></li>
+              <li><a href=""><i class="fa fa-twitter"></i></a></li>
+              <li><a href=""><i class="fa fa-linkedin"></i></a></li>
+              <li><a href=""><i class="fa fa-dribbble"></i></a></li>
+              <li><a href=""><i class="fa fa-google-plus"></i></a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div><!--/header_top-->
+  
+  <div class="header-middle"><!--header-middle-->
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-4">
+          <div class="logo pull-left">
+            <a href="<%= root_path %>"><%= image_tag("logo.png", alt: "Grocery shop Logo", class: 'img-responsive') %></a>
+          </div>
+        </div>
+        <div class="col-sm-8">
+          <div class="shop-menu pull-right">
+            <ul class="nav navbar-nav">
+              <li>
+                <% if current_user.shopkeeper? and !current_user.shop_profiles.empty? %>
+                  <li class="dropdown task-menu">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                      <i class="fa fa-tasks"> </i>Notification 
+                      <span class="badge"> <%= total_tasks_count %> </span>
+                    </a>
+                    <ul class="dropdown-menu">
+                      <div>
+                        <li>
+                          <% if current_user.shop_profiles.count > 1 %>
+                            <a href = <%= shop_profiles_path %> > You have <%= new_tasks_count %> new Order</a>
+                          <% else %>
+                            <a href = <%= orders_path(shop_profile_id: current_user.shop_profiles.first.id ,
+                            order_state: 'new') %> > You have <%= new_tasks_count %> new Order</a>
+                          <% end %>    
+                        </li>
+                      </div>
+
+                      <div>
+                        <li>
+                          <% if current_user.shop_profiles.count > 1 %>
+                            <a href = <%= shop_profiles_path %> > You have <%= in_progress_tasks_count %> pending tasks </a>
+                          <% else %>
+                            <a href = <%= orders_path(shop_profile_id: current_user.shop_profiles.first.id ,
+                            order_state: 'in-progress') %> > You have <%= in_progress_tasks_count %> pending Order </a>
+                          <% end %>  
+                        </li>
+                      </div>
+
+                      <li>
+                        <ul class="menu"> 
+                        </ul>
+                      </li>
+                    </ul>
+                  </li> 
+                <% end %>
+                <% if current_user.admin? %>
+                  <% new_shop_count =ShopProfile.where('is_approved=false').count %>
+                  <li class="dropdown task-menu">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                      <i class="fa fa-tasks"> </i>Notification 
+                      <span class="badge"> <%= new_shop_count %> </span>
+                    </a>
+                    <ul class="dropdown-menu">
+                      <div>
+                        <li>
+                          <a href = <%= shop_index_shop_profiles_path %> > You have <%= new_shop_count %> shops to approve </a>
+                        </li>
+                      </div>  
+                      <li>
+                        <ul class="menu"> 
+                        </ul>
+                      </li>
+                    </ul>
+                  </li>
+                <% end %>
+              </li>
+
+              <li>
+                <a href="<%= edit_user_basket_path(current_user) %>"><i class="fa fa-shopping-cart"></i> Cart <span class="badge"> <%= user_basket_items_count %> </span></a>
+              </li>
+     
+              <% if signed_in? %>
+                <li><a href="<%= profile_users_path %>"><i class="fa fa-user"></i> Account</a></li>
+                <li><a data-method='delete' href = "<%= destroy_user_session_path %>"><i class = "fa fa-lock"></i>Logout</a></li>
+                <% else %>
+                <li><a href="<%= new_user_session_path %>"><i class="fa fa-lock"></i> Signup/Login</a></li>
+              <% end %>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div><!--/header-middle-->
+
+  <div class="header-bottom"><!--header-bottom-->
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-9">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+          </div>
+          <div class="mainmenu pull-left">
+            <ul class="nav navbar-nav collapse navbar-collapse">
+              <% if current_user.shopkeeper? %>
+                <li class="dropdown"><a href="#" class="active">Shop<i class="fa fa-angle-down"></i></a>
+                  <ul role="menu" class="sub-menu">
+                    <li><a href="<%= shop_profiles_path %>" class="active"> All Shops </a></li>
+                    <% if current_user.shop_profiles.exists? %>
+                      <% if current_user.shop_profiles.count > 1 %>
+                        <li><a href="<%= shop_profiles_path %>"> Products </a></li>
+                      <% else %>
+                        <li><a href="<%= shop_profile_path(id: current_user.shop_profiles.first.id) %>"> Products </a></li> 
+                      <% end %>
+                      <% if current_user.shop_profiles.count > 1 %>
+                        <li><a href="<%= shop_profiles_path %>"> Orders </a></li>
+                      <% else %>
+                        <li><a href="<%= orders_path(shop_profile_id: current_user.shop_profiles.first.id, order_state: 'new')%>"> Orders </a></li>
+                      <% end %>
+                    <% end %>
+                  </ul>
+                </li> 
+              <% end%>
+              <% if current_user.customer? %>
+              <li class="dropdown"><a href="#">User<i class="fa fa-angle-down"></i></a>
+                <ul role="menu" class="sub-menu">
+                  <li>
+                    <a href="<%= orders_path %>"> Orders </a>
+                  </li>
+
+                  <li>
+                    <a href="<%= addresses_path %>"> Address </a>
+                  </li>
+                </ul>
+              </li> 
+              <% end %>
+              <% if current_user.admin? %>
+                <li class="dropdown">
+                  <a href="#" class="active">Admin<i class="fa fa-angle-down"></i></a>
+                  <ul role="menu" class="sub-menu">
+
+                    <li> 
+                      <a href="<%= users_path %>"> Customers </a>
+                    </li>
+                    <li> 
+                      <a href="<%= shop_index_shop_profiles_path %>"> Shopkeepers </a>
+                    </li>
+                    <li> 
+                       <a href="<%= product_index_products_path %>"> Products </a>
+                    </li>
+
+                  </ul>
+                </li>
+              <% end %>
+            </ul>
+          </div>
+        </div>
+        <div class="col-sm-3">
+          <div class="search_box pull-right">
+            <form action="<%= search_shop_users_path %>" method="POST" role="search", >
+              <div class="input-group col-md-12">
+                <input type="text" class="search-query form-control" placeholder="Enter Your Pincode" name='address[pincode]' id='address_pincode'/>
+                <span class="input-group-btn">
+                  <button class="btn btn-danger" type="submit">
+                    <span class=" glyphicon glyphicon-search"></span>
+                  </button>
+                </span>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+  <div class="container">
+    <% flash.each do |key, value| %>
+      <div class = "alert alert-<%= key %> fade in", id = 'flash'>
+        <button class="close" data-dismiss="alert">×</button>
+        <%= value %> 
+      </div>
+    <% end %>
+
+    <div>
+      <section id="slider"><!--slider-->
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-12">
+          <div id="slider-carousel" class="carousel slide" data-ride="carousel">
+            <ol class="carousel-indicators">
+              <li data-target="#slider-carousel" data-slide-to="0" class="active"></li>
+              <li data-target="#slider-carousel" data-slide-to="1"></li>
+              <li data-target="#slider-carousel" data-slide-to="2"></li>
+            </ol>
+            
+            <div class="carousel-inner">
+              <div class="item active">
+                <div class="col-sm-6">
+
+                  <div class = "col-sm-12" style = "height: 50%">
+                    <h2>Every great business starts with an idea .This is the one platform you need to build the business you’ve always dreamed of.<h1> Start your free trial</h1></h2>
+                  </div>
+
+                  <div class = "col-sm-12" style = "height: 50%">
+                    <p>Build your brand with your very own online store
+                    Sell your products everywhere, from websites to mobile apps
+                    See how people just like you succeed.</p>
+                  </div>
+
+                </div>
+                <div class="col-sm-6">
+                  <%= image_tag("girl1.gif", alt: "Grocery shop Logo", 
+                  class: 'girl image-resposive' )  %>
+                </div>
+              </div>
+              <div class="item">
+                <div class="col-sm-6">
+                  <div class = "col-sm-12" style = "height: 50%">
+                    <h1 style = "margin-top: 0px;">People aren’t just using mobile devices to find new products, they’re buying with them too.</h1>
+                  </div>
+
+                  <div class = "col-sm-12" style = "height: 50%">
+                    <p>In fact, over 60% of traffic come directly from smartphones and tablets. With us, you can sell your products directly in the mobile-friendly websites and apps people use every day.</p>
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <%= image_tag("girl2.gif", alt: "Grocery shop Logo", class: 'girl image-resposive' )  %>
+                </div>
+              </div>
+              
+              <div class="item">
+                <div class="col-sm-6">
+                  <h1 style = "margin-top: 0px;">When you open an online store with us, your products, orders, are instantly synced with your point of sale, so you never have to worry about updating two sets of inventory.</h1>
+                </div>
+                <div class="col-sm-6">
+                  <%= image_tag("girl3.gif", alt: "Grocery shop Logo", class: 'girl image-resposive' )  %>
+                </div>
+              </div>
+              
+            </div>
+            
+            <a href="#slider-carousel" class="left control-carousel hidden-xs" data-slide="prev">
+              <i class="fa fa-angle-left"></i>
+            </a>
+            <a href="#slider-carousel" class="right control-carousel hidden-xs" data-slide="next">
+              <i class="fa fa-angle-right"></i>
+            </a>
+          </div>
+          
+        </div>
+      </div>
+    </div>
+  </section><!--/slider-->
+    </div>
+
+<div class = 'container'>
+  <div class="content-grid">
+    <div class = 'glyphicon glyphicon-piggy-bank'> 
+      <span> <h3> Save Money being associated with Us </h3> </span>
+    </div>
+  </div>
+</div>
+    </div>
+  </div>
+    <div class="footer">
+  <div class="footer-bottom">
+    <div class="container">
+      <div class="footer-bottom-at">
+        <div class="col-md-6 footer-grid">
+          <h3> KiranaStore </h3>
+            <p> KiranaStore is Grocery shopping network that offers unmatched ease of online grocery shopping. You can order products, across various brands, from your trusted neighborhood Kirana Shop. You can also choose where and when you want your orders to be delivered. 
+            </p>
+        </div>
+        <div class="col-md-6 footer-grid-in">
+          <ul class="footer-nav">
+            <li><a href="<%= about_users_path %>" > About </a>|</li>
+            <li><a href="<%= contact_users_path %>" > Contact </a></li>
+          </ul>
+          <p class="footer-class">Copyright © 2016 KiranaStore by  <a href="http://www.mindfiresolutions.com/" target="_blank"> Mindfire RoR Interns </a> </p>
+        </div>
+        <div class="clearfix"> </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,18 @@
+var check = false;
+$('a.remove').bind('ajax:success',function(){
+	if(!check){
+		var id = $(this).attr('id');
+		$(this).closest('tr').fadeOut("slow");
+	  var pTag = document.createElement('h3');
+	  var id = "span_"+id+ " h3" ;
+	  pTag.innerHTML = parseFloat($('.total#'+id).html()) - <%= @price %>;
+	  alert(<%= @price %>);
+	  id = "span_"+$(this).attr('id');
+	  $('.total#'+id).html(pTag);
+	  var pTotal = document.createElement('h3');
+	  pTotal.innerHTML = parseFloat($('.grand-total h3').html()) - <%= @price %>;
+	  $('.grand-total').html(pTotal);
+	  $(".user-cart").text(parseInt($(".user-cart").html()) - 1);
+	  check =true;
+	}
+});

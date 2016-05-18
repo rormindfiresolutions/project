@@ -1,0 +1,39 @@
+<% provide(:title, 'Profile') %>
+<div>
+	<div class="col-md-8 col-md-offset-2">
+		<% if !current_user.user_profile.nil? %>
+			<h2><%= current_user.user_profile.first_name + "'" + 's' %> Details</h2>
+			<div>
+				Name: <%= current_user.user_profile.first_name %> <%= current_user.user_profile.last_name %>
+			</div>
+			<div>
+				Email: <%= current_user.email %>
+			</div>
+			<div>
+				Phone No.: <%= current_user.user_profile.phone_number %>
+			</div>
+			<div>
+				Secondary Email: <%= current_user.user_profile.email %>
+		
+				<% current_user.addresses.each do |f| %>
+					<div>
+						<p> Address: <%= f.address_type %> </p>
+						<div> Address line 1: <%= f.address_1 %> </div>
+						<div> Address line 2: <%= f.address_2 %> </div>
+						<div> City: <%= f.city %> </div>
+						<div> Landmark: <%= f.landmark %> </div>
+						<div> State: <%= f.state %> </div>
+						<div> PinCode: <%= f.pincode %> </div>
+					</div>
+				<% end %>	
+			</div>
+		
+			<%= link_to 'Back', root_path, class: "btn btn-primary light-blue" %>
+			<%= link_to 'Edit Details', edit_user_registration_path, class: "btn btn-primary light-blue" %>
+		
+		<% else %>
+			<h1>No Details Added Till now </h1>
+			<%= button_to "Add Details", new_user_profile_path, class: 'btn btn-primary', method: :get %>
+		<% end %>
+	</div>
+</div>

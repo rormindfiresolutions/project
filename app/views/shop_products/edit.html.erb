@@ -1,0 +1,29 @@
+<% provide(:title, 'Edit Product Price') %>
+
+<div class = 'register-section container'>
+
+<h1> Edit Product <%= @shop_product.product_name %></h1>
+
+	<div class="col-md-6 col-md-offset-3">
+
+		<%= form_for(@shop_product, url: shop_profile_shop_product_path(@shop, @shop_product), html: {method: 'put'}) do |f| %>
+
+			<%= f.label :selling_price %>
+			<%= f.number_field :selling_price, class: "form-control text_field", step: 'any', min: 0 %>
+
+			<%= f.label :mrp %>
+			<%= f.number_field :mrp, class: "form-control text_field", step: 'any', min: 0 %>
+
+			<%= f.label :product_description %>
+			<%= f.text_field :product_description, class: "form-control" %>
+
+			<%= f.label :unit_type %>
+			<%= f.text_field :unit_type, class: "form-control", disabled: true %>
+		
+			<%= f.button 'Update', class: "btn btn-primary" %>
+
+		<% end %>
+		
+	</div>
+	
+</div>

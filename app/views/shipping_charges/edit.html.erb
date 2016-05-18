@@ -1,0 +1,7 @@
+<% provide(:title, 'Edit Shipping Charges') %>
+<%= form_for @shipping_charge, url: shop_profile_shipping_charge_path(@shop,@shipping_charge) do |f|%>
+	<%= f.number_field :minimum_order_cost, required: true, placeholder: 'from', min: 1 %> To 
+	<%= f.number_field :maximum_order_cost, required: true, placeholder: 'upto', min: 1 %>
+	<%= f.number_field :shipping_cost , required: true, placeholder: 'Shipping Charge', min: 1 %>
+	<button type= 'submit'><i class="fa fa-plus-square"></i></button>
+<% end %>

@@ -1,0 +1,10 @@
+<% if ! @shop_product.nil? %>
+	<% if @shop_product.errors.any? %>
+	  <div class = "error_explanation">
+	    <%= @shop_product.errors.full_messages_for(:product_name).first %> <br/>
+	    <%= @shop_product.errors.full_messages_for(:product_description).first %> <br/>
+	    <%= @shop_product.category.errors.full_messages_for(:category_name).first %> <br/>
+	    <%= @shop_product.errors.full_messages_for(:brand_name).first %> <br/>
+	  </div>
+	<% end %>
+<% end %>

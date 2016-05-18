@@ -1,0 +1,38 @@
+<% provide(:title, 'Add new Shop') %>
+<div>
+	<% if ! current_user.user_profile.nil? %>
+		<%= link_to 'Add Shop' ,new_shop_profile_path, class: 'btn btn-primary' if policy(ShopProfile).new? %>
+	<% else %>
+		<h5> Please provide Personal Details before creating a Shop Profile </h5>
+		<%= link_to 'Add Details', new_user_profile_path, class: 'btn btn-primary', method: :get %> 
+	<% end %>
+</div>	
+
+<div>
+	<% unless @shops.nil? %>
+		<% @shops.each do |shop| %>
+			<a href = "<%= edit_shop_profile_path(shop) %>">
+			<div class = 'shop-details col-sm-5'>
+				<b> <%= shop.shop_name %> </b> <br/>
+				<%= shop.address.address_1 + " " + shop.address.address_2 %> <br/>
+				<%= shop.address.city %> <br/>
+				<%= shop.address.state %> <br/>
+				<%= link_to 'Add Products', products_path(shop_profile_id: shop.id), class:'btn btn-primary' %>
+				<%= link_to 'All Products', shop_profile_path(shop) ,class: 'btn btn-primary' %>
+				<%= link_to orders_path(shop_profile_id: shop.id, order_state: 'new'), class:'btn btn-primary' do %>
+					<% if shop.orders.where(order_state: 'new').count == 0 %>
+						Orders
+					<% else %>
+						Orders <i class="fa fa-exclamation" aria-hidden="true"></i>
+					<% end %>
+				<% end %>		
+				<div class="choose">
+					<ul class="nav nav-pills nav-justified">
+						<li><a href="<%= new_shop_profile_shipping_charge_path(shop) %>"><i class="fa fa-plus-square"></i>Add Shipping Charges</a></li>
+					</ul>
+				</div>
+			</div>	
+			</a>
+		<% end %>
+	<% end %>
+</div>

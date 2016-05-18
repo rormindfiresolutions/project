@@ -1,0 +1,16 @@
+<% provide(:title, 'All users') %>
+
+<table id="users"  data-source="<%= users_path(format: :json) %>">
+  <thead>
+    <tr>
+    	<th> Name </th>
+      <th> email </th>
+      <th> Phone No. </th>
+      <th> Secondary email </th>
+    </tr>
+  </thead>
+
+  <tbody>
+ 	</tbody>
+</table>
+<div id="user-modal" class="modal fade"></div>

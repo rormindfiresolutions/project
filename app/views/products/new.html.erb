@@ -1,0 +1,43 @@
+<% provide(:title, 'Add Product') %>
+
+<div class = 'register-section container'>
+
+<h1> Add Product </h1>
+
+	<div class="col-md-6 col-md-offset-3">
+	
+		<%= form_for(@product, html: {method: 'post'} ) do |f| %>
+		<%= render 'error_messages' %>
+
+		<%= f.label :product_name %>
+		<%= f.text_field :product_name, class: "form-control" %>
+
+		<%= f.label :product_description %>
+		<%= f.text_field :product_description, class: "form-control" %>
+
+		<%= f.label :unit_type %>
+		<%= f.text_field :unit_type, class: "form-control" %>
+
+		<div class="select">
+			<b> Select Category </b>
+			<%= collection_select(:product, :category_id, Category.all, :id, :category_name) %>
+		</div>
+
+		<%= fields_for :category, @product.category do |build| %>
+			<%= build.text_field :category_name, class: "form-control", style: "display:none", id: 'add-category', placeholder: 'Enter a New Category' %>
+		<% end %>
+
+		<div class="select">
+			<b> Brand </b>
+			<%= collection_select(:product, :brand_id, Brand.all, :id, :brand_name) %>
+		</div>
+
+		<%= fields_for :brand, @product.brand do |build| %>
+			<%= build.text_field :brand_name, class: "form-control", style: "display:none", id: 'add-brand', placeholder: 'Enter a New Brand' %>
+		<% end %>
+
+		<%= f.button 'Add Product', class: "btn btn-primary" %>
+
+		<% end %>
+
+	</div>

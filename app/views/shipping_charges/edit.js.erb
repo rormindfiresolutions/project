@@ -1,0 +1,6 @@
+$("#shipping-charge-modal").html("<%= escape_javascript(render 'edit') %>")
+$("#shipping-charge-modal").modal("show")
+
+$('.edit-shipping-charge').bind('ajax:success',function(){
+	$("#shipping-charge-modal").modal("hide")
+})

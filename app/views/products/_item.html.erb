@@ -1,0 +1,25 @@
+<div class="col-sm-4">
+	<div class="product-image-wrapper">
+		<div class="single-products">
+			<div class="productinfo text-center">
+				<%= image_tag url_for(controller: 'products', action: 'show_image', id: item), class: 'thumb-image', alt: item.product_name %> 
+			<div class='title-section'>
+				<h6><%= item.brand.brand_name %></h6>
+				<h5><%= item.product_name  %></h5>
+			</div>
+			<div class = "add-product-link">
+				<% if @shop_profile.shop_products.exists?(product_id: item.id) %>
+					<%= link_to 'Already Added','#',class: 'btn btn-primary disabled light-red' %>
+				<% else %>
+					<%= link_to 'Add To Inventory' ,shop_profile_shop_products_path(@shop_profile, product_id: item.id), method: :post,class: 'btn btn-primary',remote: true ,id: item.id %>
+				<% end %>
+			</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
+
+

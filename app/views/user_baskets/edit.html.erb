@@ -1,0 +1,63 @@
+<% provide(:title, 'Shopping Cart') %>
+
+<h1> Cart </h1>
+<% total_sum = 0 %>
+<% shop_profiles = @user_baskets.select(:shop_profile_id).distinct %>
+  <% shop_profiles.each do |shop| %>
+  <h2><%= shop_name(shop) %></h2>
+  <% user_basket = @user_baskets.where(shop_profile_id: shop.shop_profile_id) %>
+      
+  <table class="tablesaw tablesaw-stack display" data-tablesaw-mode="stack" id="products-table" >
+    <thead>
+      <tr>
+        <th> Item Details </th>
+        <th> Price </th>
+        <th> Quantity </th>
+        <th> Change Quantity</th>
+        <th> Subtotal </th>
+        <th> </th>
+      </tr>
+    </thead>
+
+    <tbody>
+    <% sum = 0 %>
+    <% user_basket.each do |item| %>
+      <tr>
+        <td> <b class="tablesaw-cell-label"> Item Details </b> <%= item_detail(item) %> </td>
+        <td> <b class="tablesaw-cell-label"> Price </b> <%= selling_price(item) %> </td>
+        <td> <b class="tablesaw-cell-label"> Quantity </b> <%= item.quantity %> </td>
+        <td> <b class="tablesaw-cell-label"> Change Quantity </b> <%= link_to 'Change Quantity', edit_quantity_user_basket_path(item), remote: true, data: { toggle: "modal", target: "#modal-window" } %> </td>
+        <td> <b class="tablesaw-cell-label"> Sub Total </b> <%= item.quantity * selling_price(item) %>
+        <% sum += item.quantity * selling_price(item) %> </td>
+        <td> <b class="tablesaw-cell-label"> Item Details </b> <%= button_to(item, method: :delete, data: { confirm: 'Are you sure to remove?' }, class: 'remove no_button', id: "#{shop.shop_profile_id}") do %> <i class="fa fa-trash font-light-red"></i> <% end %> </td>
+      </tr>
+    <% end %> 
+      <tr>
+        <td colspan="5"></td>
+        <td><strong> Total : <span class = "total" id ="span_<%=shop.shop_profile_id %>"><h3><%= total_cost(shop) %></h3></span></strong></td>
+      </tr>
+
+      <tr>
+        <td colspan="5"></td>
+        <% if find_shipping_charge(shop,sum) %>
+          <td><strong> Shipping Charge +<span id ="shipping_<%=shop.shop_profile_id %>"= ><h3>0 
+          </span></h3></strong></td>
+        <% else %> 
+          <td><strong> Shipping Charge +<span id ="shipping_<%=shop.shop_profile_id %>"= ><h3><%= shipping_charge(shop,sum) %></span></h3>
+          </strong></td>           
+        <% end %>
+      </tr>
+        <% if find_shipping_charge(shop,sum) %>
+          <% total_sum +=sum %>
+        <% else %>
+          <% total_sum += sum + shipping_charge(shop,sum) %>
+        <% end %>
+    </tbody>
+
+  </table>
+<% end %> 
+
+<div class='total-sum'> <h3> You Pay <span class= "grand-total"><h3><%= total_sum %></h3></span> </h3> </div>
+<%= link_to 'Place Order', new_order_line_path, method: :get, class: "btn btn-primary" %>
+
+<div class="modal fade" id="modal-window" role="dialog" aria-hidden="true"></div>

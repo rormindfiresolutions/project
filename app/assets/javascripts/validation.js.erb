@@ -1,0 +1,97 @@
+var nameRegex = /^[a-zA-Z]{3,30}$/;
+
+/* email Validation */
+var validate_email = function(id) {
+  var email=document.getElementById(id).value;
+  var emailRegex = /[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/;
+  if(email.match(emailRegex))
+    document.getElementById('err_'+id).innerHTML=
+      '<span class = "glyphicon glyphicon-ok-circle" + " title = "Valid email" />';
+  else
+    document.getElementById('err_'+id).innerHTML=
+      '<span class = "glyphicon glyphicon-alert" + " title = "Invalid email" />';
+}
+
+/* Password Validation */
+var validate_password = function(id) {
+  var password = document.getElementById(id).value;
+  var regex = /^[a-zA-Z0-9!@#$%^&*]{6,16}$/;
+  if(password.match(regex))
+    document.getElementById('err_'+id).innerHTML=
+      '<span class = "glyphicon glyphicon-ok-circle" + " title = "Valid Password" />';
+  else
+    document.getElementById('err_'+id).innerHTML=
+      '<span class = "glyphicon glyphicon-alert" + " title = "Invalid password. Range between 6 to 16" />';
+}
+
+/* Password Confirmation Validation */
+var validate_password_confirmation = function(id) {
+  var password_confirmation = document.getElementById(id).value;
+  var password = document.getElementById('user_password').value;
+  var regex = /^[a-zA-Z0-9!@#$%^&*]{6,16}$/;
+  if(password == password_confirmation && password_confirmation.match(regex))
+    document.getElementById('err_'+id).innerHTML=
+      '<span class = "glyphicon glyphicon-ok-circle" + " title = "Password matched" />';
+  else
+    document.getElementById('err_'+id).innerHTML=
+      '<span class = "glyphicon glyphicon-alert" + " title = "Password did not match" />';
+}
+
+/* Validation of fields accepting only Alphabets like First Name, Last Name  */
+var validate_text_field = function(id) {
+  var text = document.getElementById(id).value;
+  if(text.match(nameRegex))
+    document.getElementById('err_'+id).innerHTML=
+      '<span class = "glyphicon glyphicon-ok-circle" + " title = "Entered information is valid" />';
+  else
+    document.getElementById('err_'+id).innerHTML=
+      '<span class = "glyphicon glyphicon-alert" + " title = "Invalid information "/>';  
+}
+
+/* Phone Number Validation */
+var validate_phone_number = function(id) {
+  var phoneNumber = document.getElementById(id).value;
+  var phoneRegex = /^[789]\d{9}$/;
+  if(phoneNumber.match(phoneRegex))
+    document.getElementById('err_'+id).innerHTML=
+      '<span class = "glyphicon glyphicon-ok-circle" + " title = "Valid Phone Number" />';
+  else
+    document.getElementById('err_'+id).innerHTML=
+      '<span class = "glyphicon glyphicon-alert" + " title = "Invalid Phone Number. Should be of 10 digits" />';
+}
+
+/* Pincode Validation */
+var validate_pincode = function(id) {
+  var pincode = document.getElementById(id).value;
+  var pinRegex = /^[0-9]{6,6}$/;
+  if(pincode.match(pinRegex))
+    document.getElementById('err_' + id).innerHTML =
+      '<span class = "glyphicon glyphicon-ok-circle" + " title = "Valid Pincode" />';
+  else
+    document.getElementById('err_' + id).innerHTML =
+      '<span class = "glyphicon glyphicon-alert" + " title = "Invalid Pincode. Should be of 6 Digits" />';
+}
+
+/* Shop Name Validation */
+var validate_shop_name = function(id) {
+  var shopName = document.getElementById(id).value;
+  var shopNameRegex = /^[a-zA-Z0-9_ .]{3,30}$/;
+  if(shopName.match(shopNameRegex))
+    document.getElementById('err_' + id).innerHTML =
+      '<span class = "glyphicon glyphicon-ok-circle" + " title = "Valid Shop name" />'; 
+  else
+    document.getElementById('err_' + id).innerHTML =
+      '<span class = "glyphicon glyphicon-alert" + " title = "Invalid Shop Name" />';
+}
+
+/* Validation of fields like City, State */
+var validate_place = function(id) {
+  var place =document.getElementById(id).value;
+  var placeRegex = /^[a-zA-Z ]{3,30}$/;
+  if(place.match(placeRegex))
+    document.getElementById('err_' + id).innerHTML =
+      '<span class = "glyphicon glyphicon-ok-circle" + " title = "Valid Shop name" />'; 
+  else
+    document.getElementById('err_' + id).innerHTML =
+      '<span class = "glyphicon glyphicon-alert" + " title = "Invalid Shop Name" />';
+}

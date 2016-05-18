@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+	<head>
+	  <meta name="viewport" content="width=device-width, initial-scale=1">
+	  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+	  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+	  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+	</head>
+	<body>
+
+		<div class="container">
+			<h1>Hi <%= @user.email %></h1>
+			<p> Your order was placed on <%= Time.now.strftime("%d-%m-%Y %H:%M:%S") %> </p>
+		  <h2> Order No. <%= Order.where('id = ?', @order_lines.first.order_id).first.id%></h2>
+		  <h2> Order </h2>
+		                                                                                      
+		  <div class="table-responsive">          
+			  <table class="table">
+			    <thead>
+			      <tr>
+			        <th> Product </th>
+			        <th> Price </th>
+			        <th> Quantity </th>
+			        <th> Subtotal </th>
+			      </tr>
+			    </thead>
+			    <tbody>
+		      	<% @order_lines.each do |order_line| %>
+				      <tr>
+				        <td> <%= order_line.shop_product_name %> </td>
+				        <td> <%= order_line.shop_product_price %> </td>
+				        <td> <%= order_line.quantity %> </td>
+				        <td> <%= order_line.line_value %> </td>
+				      </tr>
+				    <% end %>
+				    
+				    <tr>
+					    <td></td>
+					    <td></td>
+					    <td></td>
+					    <td> <strong>Shipping Charge: </strong><%= Order.where('id = ?',
+				    		 @order_lines.first.order_id).first.shipping_charge %> </td>
+				    </tr>
+
+				    <tr>
+					    <td></td>
+					    <td></td>
+					    <td></td>
+					    <td> <strong>Total Amount: </strong><%= Order.where('id = ?',
+					    		 @order_lines.first.order_id).first.order_value %> </td>
+			    	</tr>
+
+			    </tbody>
+			  </table>
+		  </div>
+
+		</div>
+
+	</body>
+</html>
+
+
+
+

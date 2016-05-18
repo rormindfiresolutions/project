@@ -1,0 +1,30 @@
+<% provide(:title, 'Transactions') %>
+<h3> Transactions of <%= @shop_product.product_name %></h3>
+<h3> Quantity remaining <%= @shop_product.shop_inventory.quantity %> <%= @shop_product.unit_type %></h3>
+<a href="<%= new_shop_inventory_detail_path(shop_product_id: @shop_product.id) %>" class="btn btn-primary"> Manage Inventory Details </a>
+<div>
+	<% if !@shop_inventory_details.empty? %>
+		<table id="products-table">
+			<thead>
+		    <tr>
+		    	<th> Date </th>
+		    	<th> Inventory Type </th>
+		    	<th> Quantity </th>
+		    	<th> Notes </th>      
+		    </tr>
+		  </thead>
+		  <tbody>
+				<% @shop_inventory_details.each do |item| %>
+					<tr>
+						<td> <%= item.created_at%> </td>
+						<td> <%= item.inventory_type %> </td>
+						<td> <%= item.quantity %> </td>					
+						<td> <%= item.notes %> </td>					
+					</tr>	
+				<% end %>
+			</tbody>	
+		</table>
+	<% end %>
+</div>
+
+

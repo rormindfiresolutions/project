@@ -1,0 +1,12 @@
+<% if !@shops.nil? %>
+	<% @shops.each do |shop| %>
+		<a href = "<%= shop_profile_path(shop) %>">
+		<div class = 'shop-details col-md-3'>
+			<div> <h3> <%= shop.shop_name %> </h3> </div>
+			<div> <%= shop.address.address_1 + ', ' + shop.address.address_2 + ', ' + shop.address.city + ', ' + shop.address.state %> </div>
+		</div>
+		</a>
+	<% end %>
+<% end %>
+
+

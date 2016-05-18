@@ -1,0 +1,31 @@
+<div class = 'modal-dialog'>
+  <div class = 'modal-content'>
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+      <h3>Change Quantity</h3>
+    </div>
+
+    <div class="modal-body">
+      <%= form_for(@user_basket,url: update_quantity_user_basket_path(@user_basket), html: {method: 'put'}) do |f| %>
+
+        <%= f.label :quantity %>
+        <% if check_unit_type(@shop_product) %>          
+          <%= f.number_field :quantity, class: "form-control text_field", step: 'any', min: 1 %>
+        <% else %>
+          <%= f.number_field :quantity, class: "form-control text_field", step: 'any', min: 0 %>
+        <% end %>
+        
+        <div class = 'col-md-11'>
+          <%= f.button 'Submit Details', class: "btn btn-primary" %>  
+        </div>
+
+      <% end %>
+    </div>
+
+    <div class="modal-footer">
+      <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+    </div>
+
+  </div>
+</div>
+

@@ -1,0 +1,36 @@
+<div class="col-sm-4 remove">
+	<div class="product-image-wrapper">
+		<div class="single-products">
+			<div class="productinfo text-center ">
+				<%= image_tag url_for(controller: 'shop_products', action: 'show_image', id: item.id),
+					class: 'thumb-image',alt: item.product_name %>
+				<div class='title-section-expand'>
+					<h6><%= item.brand_name %></h6>
+					<h5><%= item.product_name + '(' + item.unit_type + ')' %> </h5>
+					<h5> Quantity Remaining : <%= item.shop_inventory.quantity %> </h5>
+					<% if item.selling_price < item.mrp %>
+						<h2> ₹ <del><%= item.mrp %></del> </h2>
+					<% end %>
+					<h2> ₹ <%= item.selling_price %> </h2>
+				</div>
+				<div class = 'added-to-cart'>
+					<% if current_user.shopkeeper? and policy(@shop_profile).show? %>
+						<a href="<%= edit_shop_profile_shop_product_path(@shop_profile, item) %>" class="btn btn-primary"> Price </a>
+						<a href="<%= shop_inventory_details_path(shop_product_id: item.id) %>" class="btn btn-primary"> Transactions </a>
+					<% else %>
+						<% if item.shop_inventory.quantity == 0 %>
+							<%= link_to 'Out of Stock', '#', class: 'btn btn-default add-to-cart', disabled: true %>
+						<% else %>
+							<a data-remote = "true" href="<%= user_basket_path(id: item.id) %>" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+						<% end %>
+					<% end %>
+				</div>
+				<% if current_user.shopkeeper? and policy(@shop_profile).destroy? %>
+					<%= button_to(shop_profile_shop_product_path(@shop_profile,item),class:'btn btn-primary light-red delete-button', method: :delete,remote: true, data: { confirm: 'Are you sure to remove?' }) do %>
+					<i class="fa fa-trash" aria-hidden="true"></i>
+					<% end %>
+				<% end %>
+			</div>
+		</div>
+	</div>
+</div>

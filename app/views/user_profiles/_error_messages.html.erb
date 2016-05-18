@@ -1,0 +1,8 @@
+<% if @detail.errors.any? %>
+  <div class = "error_explanation">
+    <%= @detail.errors.full_messages_for(:first_name).first %> <br/>
+    <%= @detail.errors.full_messages_for(:last_name).first %> <br/>
+    <%= @detail.errors.full_messages_for(:phone_number).first %> <br/> 
+    <%= @detail.errors.full_messages_for(:email).first %> <br/>     
+  </div>
+<% end %>

@@ -1,0 +1,21 @@
+<% provide(:title, 'Details') %>
+
+<div class = 'register-section container'>
+
+<h1> Details </h1>
+
+	<div class="col-md-6 col-md-offset-3">
+
+		<%= form_for(@shop, url: shop_profiles_path, html: {method: 'post'}) do |f| %>
+			<%= render 'error_messages' %>
+
+			<%= render partial: 'shared/shop_profile_form', locals: { f: f } %>
+
+			<div class = 'col-md-11'>
+				<%= f.button 'Submit Details', class: "btn btn-primary" %>	
+			</div>
+		<% end %>
+
+	</div>
+
+</div>

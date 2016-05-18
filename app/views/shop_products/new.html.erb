@@ -1,0 +1,45 @@
+<% provide(:title, 'Add Product') %>
+
+<div>
+<h1> Add Product </h1>
+	<div class="col-md-6 col-md-offset-3">
+		<%= form_for(@shop_product, url: add_product_manually_shop_profile_shop_products_path(@shop_profile)) do |f| %>
+		<%= render 'error_messages' %>
+
+		<%= f.label :product_name %>
+		<%= f.text_field :product_name, class: "form-control" %>
+
+		<%= f.label :product_description %>
+		<%= f.text_field :product_description, class: "form-control" %>
+
+		<div class="select">
+			<b> Select Category </b>
+			<%= collection_select(:shop_product, :category_id, @categories, :id, :category_name) %>
+		</div>
+
+		<div class="select" >
+			<b> Select Brand </b>
+			<%= collection_select(:product, :brand_id, @brands, :id, :brand_name) %>
+		</div>
+
+		<%= f.text_field :brand_name, class: "form-control", style: "display:none", id: 'add-brand', placeholder: 'Enter a New Brand' %>
+
+		<%= f.label :unit_type %>
+		<%= f.select "unit_type", options_for_select([ "packet", "kgs", "gms", "ltr", "ml", "pcs" ], "packet") %>
+
+		<%= f.label :selling_price %>
+		<%= f.number_field :selling_price, class: "form-control text_field", step: 'any', min: 0 %>
+
+		<%= f.label :mrp %>
+		<%= f.number_field :mrp, class: "form-control text_field", step: 'any', min: 0 %>
+
+		<%= fields_for :shop_inventory, @shop_product.shop_inventory do |builder| %>
+			<%= builder.label :quantity %>
+			<%= builder.number_field :quantity, class: "form-control", step: 'any', min: 0 %>		
+		<% end %>
+
+		<%= f.button 'Add Product to Shop', class: "btn btn-primary" %>
+
+		<% end %>
+	</div>
+</div>

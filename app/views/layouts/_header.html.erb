@@ -1,0 +1,185 @@
+<header id="header"><!--header-->
+  <div class="header_top"><!--header_top-->
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-6 ">
+          <div class="contactinfo">
+            <ul class="nav nav-pills">
+              <li><a href=""><i class="fa fa-phone"></i> +2 95 01 88 821</a></li>
+              <li><a href=""><i class="fa fa-envelope"></i> info@domain.com</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <div class="social-icons pull-right">
+            <ul class="nav navbar-nav">
+              <li><a href=""><i class="fa fa-facebook"></i></a></li>
+              <li><a href=""><i class="fa fa-twitter"></i></a></li>
+              <li><a href=""><i class="fa fa-linkedin"></i></a></li>
+              <li><a href=""><i class="fa fa-dribbble"></i></a></li>
+              <li><a href=""><i class="fa fa-google-plus"></i></a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div><!--/header_top-->
+  
+  <div class="header-middle"><!--header-middle-->
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-4">
+          <div class="logo pull-left">
+            <a href="<%= root_path %>"><%= image_tag("logo.png", alt: "Grocery shop Logo", class: 'img-responsive') %></a>
+          </div>
+        </div>
+        <div class="col-sm-8">
+          <div class="shop-menu pull-right">
+            <ul class="nav navbar-nav">
+              <li>
+                <% if current_user.shopkeeper? and !current_user.shop_profiles.empty? %>
+                  <li class="dropdown task-menu">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                      <i class="fa fa-tasks"> </i>Notification 
+                      <span class="badge"> <%= total_tasks_count %> </span>
+                    </a>
+                    <ul class="dropdown-menu">
+                      <div>
+                        <li>
+                          <% if current_user.shop_profiles.count > 1 %>
+                            <a href = <%= shop_profiles_path %> > You have <%= new_tasks_count %> new Order</a>
+                          <% else %>
+                            <a href = <%= orders_path(shop_profile_id: current_user.shop_profiles.first.id ,
+                            order_state: 'new') %> > You have <%= new_tasks_count %> new Order</a>
+                          <% end %>    
+                        </li>
+                      </div>
+
+                      <div>
+                        <li>
+                          <% if current_user.shop_profiles.count > 1 %>
+                            <a href = <%= shop_profiles_path %> > You have <%= in_progress_tasks_count %> pending tasks </a>
+                          <% else %>
+                            <a href = <%= orders_path(shop_profile_id: current_user.shop_profiles.first.id ,
+                            order_state: 'in-progress') %> > You have <%= in_progress_tasks_count %> pending Order </a>
+                          <% end %>  
+                        </li>
+                      </div>
+
+                      <li>
+                        <ul class="menu"> 
+                        </ul>
+                      </li>
+                    </ul>
+                  </li> 
+                <% end %>
+                <% if current_user.admin? %>
+                  <% new_shop_count =ShopProfile.where('is_approved=false').count %>
+                  <li class="dropdown task-menu">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                      <i class="fa fa-tasks"> </i>Notification 
+                      <span class="badge"> <%= new_shop_count %> </span>
+                    </a>
+                    <ul class="dropdown-menu">
+                      <div>
+                        <li>
+                          <a href = <%= shop_index_shop_profiles_path %> > You have <%= new_shop_count %> shops to approve </a>
+                        </li>
+                      </div>  
+                      <li>
+                        <ul class="menu"> 
+                        </ul>
+                      </li>
+                    </ul>
+                  </li>
+                <% end %>
+              </li>
+
+              <li>
+                <a href="<%= edit_user_basket_path(current_user) %>"><i class="fa fa-shopping-cart"></i> Cart <span class="badge user-cart"> <%= user_basket_items_count %> </span></a>
+              </li>
+                
+              <% if signed_in? %>
+                <li><a href="<%= profile_users_path %>"><i class="fa fa-user"></i> Account</a></li>
+                <li><a data-method='delete' href = "<%= destroy_user_session_path %>"><i class = "fa fa-lock"></i>Logout</a></li>
+                <% else %>
+                <li><a href="<%= new_user_session_path %>"><i class="fa fa-lock"></i> Signup/Login</a></li>
+              <% end %>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div><!--/header-middle-->
+
+  <div class="header-bottom"><!--header-bottom-->
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-9">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+          </div>
+          <div class="mainmenu pull-left">
+            <ul class="nav navbar-nav collapse navbar-collapse">
+              <% if current_user.shopkeeper? %>
+                <li class="dropdown"><a href="#" class="active dropdown-toggle" data-toggle="dropdown">Shop<i class="fa fa-angle-down"></i></a>
+                  <ul role="menu" class="sub-menu">
+                    <li><a href="<%= shop_profiles_path %>" class="active"> All Shops </a></li>
+                    <% if current_user.shop_profiles.exists? %>
+                      <% if current_user.shop_profiles.count > 1 %>
+                        <li><a href="<%= shop_profiles_path %>"> Products </a></li>
+                      <% else %>
+                        <li><a href="<%= shop_profile_path(id: current_user.shop_profiles.first.id) %>"> Products </a></li> 
+                      <% end %>
+                      <% if current_user.shop_profiles.count > 1 %>
+                        <li><a href="<%= shop_profiles_path %>"> Orders </a></li>
+                      <% else %>
+                        <li><a href="<%= orders_path(shop_profile_id: current_user.shop_profiles.first.id, order_state: 'new')%>"> Orders </a></li>
+                      <% end %>
+                    <% end %>
+                  </ul>
+                </li> 
+              <% end%>
+              <% if current_user.customer? %>
+              <li class="dropdown"><a href="#">User<i class="fa fa-angle-down"></i></a>
+                <ul role="menu" class="sub-menu">
+                  <li>
+                    <a href="<%= orders_path %>"> Orders </a>
+                  </li>
+
+                  <li>
+                    <a href="<%= addresses_path %>"> Address </a>
+                  </li>
+                </ul>
+              </li> 
+              <% end %>
+              <% if current_user.admin? %>
+                <li class="dropdown">
+                  <a href="#" class="active">Admin<i class="fa fa-angle-down"></i></a>
+                  <ul role="menu" class="sub-menu">
+
+                    <li> 
+                      <a href="<%= users_path %>"> Customers </a>
+                    </li>
+                    <li> 
+                      <a href="<%= shop_index_shop_profiles_path %>"> Shopkeepers </a>
+                    </li>
+                    <li> 
+                       <a href="<%= product_index_products_path %>"> Products </a>
+                    </li>
+
+                  </ul>
+                </li>
+              <% end %>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>

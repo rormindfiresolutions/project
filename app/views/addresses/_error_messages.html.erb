@@ -1,0 +1,9 @@
+<% if @address.errors.any? %>
+  <div class = "error_explanation">
+    <%= @address.errors.full_messages_for(:address_1).first %> <br/>
+    <%= @address.errors.full_messages_for(:city).first %> <br/>
+    <%= @address.errors.full_messages_for(:state).first %> <br/>
+    <%= @address.errors.full_messages_for(:pincode).first %> <br/>
+  </div>
+<% end %>
+

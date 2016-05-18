@@ -1,0 +1,73 @@
+<% provide(:title, 'Start Shopping') %>
+<div class="search-div"><!--header-bottom-->
+  <div class="container">
+    <div class="row">
+    	<div class="col-sm-9"></div>
+			<div class="col-sm-3">
+			  <div class="search_box pull-right">
+			    <%= form_tag shop_profile_path, :method => 'get' do %>
+			      <div class="input-group">
+			        <%= text_field_tag :search, params[:search],class: "search-query form-control" ,
+    					placeholder: "Enter Product/brand Name" %>
+			        <span class="input-group-btn">
+			          <button class="btn btn-danger" type="submit">
+			            <span class=" glyphicon glyphicon-search"></span>
+			          </button>
+			        </span>
+			      </div>
+			    <% end %>
+			  </div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<section>
+	<div class="container">
+		<div class="row">
+			<div class="col-sm-3">
+				<div class="left-sidebar">
+					<h2>Category</h2>
+					<div class="panel-group category-products" id="accordian"><!--category-productsr-->
+						<div class="panel panel-default">
+							<div class="panel-heading">
+								<h4 class="panel-title">
+									<%= link_to 'All Products', shop_profile_path %>
+								</h4>
+							</div>
+						</div>
+						<% @shop_profile.shop_products.select(:category_id).group(:category_id).each do |item| %>
+							<div class="panel panel-default">
+								<div class="panel-heading">
+									<h4 class="panel-title">
+										<%= link_to Category.find_by(id: item.category_id).category_name, shop_profile_path(@shop_profile, category_id: item.category_id),class: "#{cp(shop_profile_path(@shop_profile, category_id: item.category_id))}" %>
+									</h4>
+								</div>
+							</div>
+						<% end %>
+					</div>
+					<% if current_user.shopkeeper? and policy(@shop_profile).show? %>
+						<%= link_to 'Add Product from Product Bank', products_path(shop_profile_id: @shop_profile.id), class: 'btn btn-primary' %>
+					<% end %>
+				</div>
+			</div>
+			
+			<div class="col-sm-9 padding-right">
+				<div class="features_items"><!--features_items-->
+					<h2 class="title text-center">Features Items</h2>
+					<div id = "featured-products">
+						<% if @items.present? %>
+							<%= render partial: 'item',collection: @items %>
+						<% else %>
+						  <h3><p>There are no items containing the term(s) <%= params[:search] %>.</p></h3>
+						<% end %>	
+					</div>
+					<%= will_paginate @items%>
+				</div><!--features_items-->
+			</div>
+		</div>
+	</div>
+</section>
+
+
+

@@ -1,0 +1,5 @@
+tmp/cache/assets/sprockets/v3.0
+tmp/
+log/
+config/database.yml
+.ruby-version

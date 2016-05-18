@@ -1,0 +1,55 @@
+<% provide(:title, 'Ordered Items') %>
+<h1> Ordered Items </h1>
+<div> 
+	<p> Order was placed on <%= @order.created_at %> </p>
+	<p> Order State: <%= @order.order_state %> </p>
+	<table class="tablesaw tablesaw-stack" data-tablesaw-mode="stack" id="products-table">
+		<thead>
+	    <tr>
+	    	<th> Product </th>
+	    	<th> Price </th>
+      	<th> Quantity </th>
+      	<th> Subtotal </th>
+	    </tr>
+	  </thead>
+	  <tbody>
+		<% unless @order.nil? %>
+			<% @order.order_lines.each do |item| %>
+				<tr>
+					<td> <b class="tablesaw-cell-label"> Product Name </b> <%= item.shop_product_name%> </td>
+					<td> <b class="tablesaw-cell-label"> Price </b> <%= item.shop_product_price %> </td>	
+					<td> <b class="tablesaw-cell-label"> Quantity </b> <%= item.quantity %> </td>
+					<td> <b class="tablesaw-cell-label"> Subtotal </b> <%= item.line_value %> </td>
+				</tr>	
+			<% end %>
+		<% end %>
+		<tr>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td> Shipping Charge <%= @order.shipping_charge %> </td>
+		</tr>
+		<tr>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td> Total Amount <%= @order.order_value %> </td>	
+		</tr>
+	</table>
+
+	<% if current_user.orders.find_by(id: params[:id]) == @order and policy(@order).show? %>
+		<%= link_to 'Download PDF', { action: 'show', format: :pdf }, class: 'btn btn-primary light-blue' %>
+	<% end %>
+
+	<% if policy(@order).edit? and @order.order_state != 'closed' %>
+		<a href = "<%= edit_order_path(@order) %>", class = "btn btn-primary", onclick = 'clickAndDisable(this);' ><%= state_text %></a>
+	<% end %>
+
+	<% if policy(@order).revert_order_state? and (@order.order_state == 'in-progress' or @order.order_state == 'delivered')%>
+		<a href = "<%= order_revert_order_state_path(@order) %>", class = "btn btn-primary", onclick = 'clickAndDisable(this);' ><%= revert_state_text %></a>
+	<% end %>
+
+	<% if @order.order_state == 'new' or @order.order_state == 'in-progress' %>
+	  <%= link_to('Cancel Order', order_cancel_order_path(@order), method: :get, data: { confirm: 'Are you sure?' }, class: "btn btn-primary") %>			
+	<% end %>	
+</div>

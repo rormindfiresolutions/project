@@ -1,0 +1,20 @@
+<% provide(:title, 'Products List') %>
+<% provide(:title, 'All products') %>
+
+<div class='right-button'>
+  <%= link_to 'Add New Product to Product Bank', new_product_path, class: 'btn btn-primary', method: :get if policy(Product).new? %>
+</div>
+
+<h1>All Products</h1>
+
+<table id="products"  data-source="<%= product_index_products_path(format: :json) %>">
+  <thead>
+    <tr>
+      <th> Product Name </th>
+      <th> Activation Status </th>
+    </tr>
+  </thead>
+
+  <tbody>
+  </tbody>
+</table>

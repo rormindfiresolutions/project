@@ -1,0 +1,8 @@
+$(".added-to-cart").on("ajax:success",function(e, data, status, xhr){
+	var aTag = document.createElement('a');
+	aTag.setAttribute('href',"#");
+	aTag.innerHTML = "Added to cart";
+	aTag.className = "btn btn-primary disabled light-red bottom-space"
+  $(this).html(aTag);
+  $(".user-cart").text(<%= user_basket_items_count %>);
+});

@@ -1,0 +1,9 @@
+<tr>
+	<td><b class="tablesaw-cell-label"> Customer Details </b> <%= link_to 'ORKS' + order.id.to_s, order_path(order) %>
+			<%= " | " + order.created_at.to_s + " | " + order.user.user_profile.first_name + " | " %> <br />
+			<%= order.address.address_1 + " " + order.address.address_2 + " " + order.address.city + " " + order.address.state + " " + order.address.pincode.to_s %> <br />
+			<%= order.user.user_profile.phone_number %> </td>
+	<td><b class="tablesaw-cell-label"> Order State </b> <%= order.order_state %> </td>
+	<td><b class="tablesaw-cell-label"> No. of orders </b> <%= order.order_lines.count %> </td>	
+	<td><b class="tablesaw-cell-label"> Total Amount </b> <%= order.order_value %> </td>
+</tr>	

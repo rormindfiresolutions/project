@@ -1,0 +1,17 @@
+<% if @shop.errors.any? %>
+  <div class = "error_explanation">
+    <%= @shop.errors.full_messages_for(:shop_name).first %> <br/>
+    <%= @shop.errors.full_messages_for(:phone_number).first %> <br/>
+    <%= @shop.errors.full_messages_for(:email).first %> <br/>
+<% end %>
+
+<% if ! @shop.address.nil? %>
+	<% if @shop.address.errors.any? %>
+	  <div class = "error_explanation">
+	    <%= @shop.address.errors.full_messages_for(:address_1).first %> <br/>
+	    <%= @shop.address.errors.full_messages_for(:city).first %> <br/>
+	    <%= @shop.address.errors.full_messages_for(:state).first %> <br/>
+	    <%= @shop.address.errors.full_messages_for(:pincode).first %> <br/>
+	  </div>
+	<% end %>
+<% end %>

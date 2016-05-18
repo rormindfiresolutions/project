@@ -1,0 +1,47 @@
+<html>
+  <head>
+    <meta charset='utf-8' />
+    <%= wicked_pdf_stylesheet_link_tag "pdf" -%>
+  </head>
+  <div> <%= wicked_pdf_image_tag 'logo.png' %> </div>
+  <h3> Invoice </h3>
+  <p> Your order was placed on <%= @order.created_at %> </p>
+  <table class="tablesaw tablesaw-stack" data-tablesaw-mode="stack" id="products-table">
+    <thead>
+      <tr>
+        <th class="invoice-th"> Product </th>
+        <th class="invoice-th"> Price </th>
+        <th class="invoice-th"> Quantity </th>
+        <th class="invoice-th"> Subtotal </th>
+      </tr>
+    </thead>
+    <tbody>
+      <% unless @order.nil? %>
+        <% @order.order_lines.each do |item| %>
+          <tr>
+            <td class="invoice-td"> <%= item.shop_product_name%> </td>
+            <td class="invoice-td"> <%= item.shop_product_price %> </td>  
+            <td class="invoice-td"> <%= item.quantity %> </td>
+            <td class="invoice-td"> <%= item.line_value %> </td>
+          </tr> 
+        <% end %>
+      <% end %>
+      <tr>
+        <td class="invoice-td"></td>
+        <td class="invoice-td"></td>
+        <td class="invoice-td"></td>
+        <td class="invoice-td"> Shipping Charge <%= @order.shipping_charge %> </td>
+      </tr>
+      <tr>
+        <td class="invoice-td"></td>
+        <td class="invoice-td"></td>
+        <td class="invoice-td"></td>
+        <td class="invoice-td"> Total Amount <%= @order.order_value %> </td> 
+      </tr>
+    </table>
+    <div class="invoice-footer">
+      <hr>
+      <h6>Thanks for shopping with us </h6>
+    </div>
+  </tbody>
+</html>  

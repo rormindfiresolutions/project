@@ -1,0 +1,21 @@
+<% provide(:title, 'Shop Products') %>
+<div class='right-button'>
+	<%= link_to 'Add Product from Product Bank', products_path(shop_profile_id: @shop_profile.id), class: 'btn btn-primary' %>
+</div>
+
+<h1> Shop Products </h1>
+
+<div>
+	<table id="shop_products"  data-source="<%= shop_profile_shop_products_path(format: :json) %>">
+		<thead>
+	    <tr>
+	    	<th> Product Name </th>
+	      <th> Unit Type </th>
+	      <th> Quantity </th>
+	      <th> All Transactions </th>
+	    </tr>
+	  </thead>
+	  <tbody>
+		</tbody>
+	</table>
+</div>

@@ -1,0 +1,53 @@
+<% provide(:title, 'Orders') %>
+<h1> Orders </h1>
+
+<div>
+	<% if current_user.shopkeeper? %>
+		<ul class="nav nav-tabs">
+		  <li><a data-remote="true" href="<%= orders_path(shop_profile_id: @shop_profile.id, 
+		  order_state: 'new') %>">New Orders
+						<span class = 'badge'><%= new_order_count(@shop_profile) %></span></a></li>
+		  <li><a data-remote="true" href="<%= orders_path(shop_profile_id: @shop_profile.id, 
+		  order_state: 'in-progress') %>">Processed Orders
+						<span class = 'badge'><%= in_progress_order_count(@shop_profile) %></span></a></li>
+		  <li><a data-remote="true" href="<%= orders_path(shop_profile_id: @shop_profile.id, 
+		  order_state: 'delivered') %>">Deliverd Orders
+						<span class = 'badge'><%= delevered_order_count(@shop_profile) %></span> </a></li>
+		  <li><a data-remote="true" href="<%= orders_path(shop_profile_id: @shop_profile.id, 
+		  order_state: 'closed') %>">Closed Orders 
+						<span class = 'badge'><%= closed_order_count(@shop_profile) %></span> </a></li>
+			<li><a data-remote="true" href="<%= orders_path(shop_profile_id: @shop_profile.id, 
+			order_state: 'own') %>">Shop Orders 
+						<span class = 'badge'><%= shop_order_count(@shop_profile) %></span> </a></li>
+		</ul>
+	<% end %>
+
+	<%if current_user.customer?%>
+		<%= form_tag orders_path, method: :get do %>
+		  <p>
+		    <%= select_tag(:list, options_for_select(['All', 'One Month'], selected: (params[:list])),
+		    class:'col-md-2' )%>
+		    <%= submit_tag "Check" ,class:'btn btn-primary' %>
+		  </p>
+		<% end %>
+	<% end %>
+
+	<% unless @orders.nil? %>
+		<table class="tablesaw tablesaw-stack" data-tablesaw-mode="stack" id="products-table">
+			<thead>
+		    <tr>
+		    	<th> Customer Deatils </th>
+		    	<th> Order State </th>
+		    	<th> No. of orders </th>
+		      <th> Total Amount </th>
+		    </tr>
+		  </thead>
+		  <tbody>
+				<div id = "shop-orders">
+					<%= render partial: 'order', collection: @orders %>
+				</div>
+		</table>
+	<% end %>
+</div>
+
+

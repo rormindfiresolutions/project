@@ -1,0 +1,60 @@
+<div class = 'col-md-11'>
+	<%= f.label :address_1 %>
+	<span class = 'asterisk'>*</span>
+</div>
+<div class = 'col-md-11'>
+	<%= f.text_field :address_1, placeholder: 'Address 1', class: "form-control", onFocus: 'geolocate(this.id)' %>
+</div>
+<div class= 'col-md-1' id = 'err_address_address_1'>
+</div>
+
+<div class = 'col-md-11'>
+	<%= f.label :address_2 %>
+</div>
+<div class = 'col-md-11'>
+	<%= f.text_field :address_2, placeholder: 'Address 2', class: "form-control" %>
+</div>
+
+<div class = 'col-md-11'>
+	<%= f.label :landmark %>
+</div>
+<div class = 'col-md-11'>
+	<%= f.text_field :landmark, placeholder: 'Landmark', class: "form-control" %>
+</div>
+
+<div class = 'col-md-11'>
+	<%= f.label :city %>
+	<span class = 'asterisk'>*</span>
+</div>
+<div class = 'col-md-11'>
+	<%= f.text_field :city, placeholder: 'City', class: "form-control", onblur: 'validate_place(this.id)' %>
+</div>
+<div class= 'col-md-1' id = 'err_address_city'>
+</div>
+
+<div class = 'col-md-11'>
+	<%= f.label :state %>
+	<span class = 'asterisk'>*</span>
+</div>
+<div class = 'col-md-11'>
+	<%= f.text_field :state, placeholder: 'State', class: "form-control", onblur: 'validate_place(this.id)' %>
+</div>
+<div class = 'col-md-1' id = 'err_address_state'>
+</div>
+
+<div class = 'col-md-11'>
+	<%= f.label :pincode %>
+	<span class = 'asterisk'>*</span>
+</div>
+<div class = 'col-md-11'>
+	<%= f.text_field :pincode, placeholder: 'Pincode', class: "form-control", onblur: 'validate_pincode(this.id)' %>
+</div>
+<div class = 'col-md-1' id = 'err_address_pincode'>
+</div>
+
+<div class = 'col-md-11'>
+	 <div class = 'text-muted'><em><span class = 'asterisk'>*</span> Indicates required field</em></div>
+</div>
+
+<script src="https://maps.googleapis.com/maps/api/js?libraries=places&callback=initAutocomplete"async defer>
+</script>

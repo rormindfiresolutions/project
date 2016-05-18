@@ -1,0 +1,20 @@
+<% provide(:title, 'Addresses') %>
+<div>
+	<%= link_to 'Add Address', new_address_path, class: 'btn btn-primary'%>
+</div>
+
+<div>
+	<% if !@addresses.nil? %>
+		<% @addresses.each do |address| %>
+			<a href= "<%= edit_address_path(address) %>">
+				<div class = 'shop-details col-md-3'>
+					Address Name: <%= address.name %> <br/>
+					Address: <%= address.address_1 + " " + address.address_2 %> <br/>
+					City: <%= address.city %> <br/>
+					State: <%= address.state %> <br/>
+					Pincode: <%= address.pincode %> <br/>
+				</div>
+			</a>
+		<% end %>
+	<% end %>
+</div>

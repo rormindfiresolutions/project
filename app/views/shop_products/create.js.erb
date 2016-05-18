@@ -1,0 +1,7 @@
+$(".add-product-link").on("ajax:success",function(e, data, status, xhr){
+	var aTag = document.createElement('a');
+	aTag.setAttribute('href',"#");
+	aTag.innerHTML = "Already Added";
+	aTag.className = "btn btn-primary disabled light-red"
+  $(this).html(aTag);
+});

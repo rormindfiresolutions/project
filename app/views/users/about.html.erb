@@ -1,0 +1,88 @@
+<% provide(:title, 'About us') %>
+<div class="container">
+	<div class="about">
+		<div class="about-top">
+			<h3> A few words about us </h3>
+
+				<div class="col-md-8 top-about">
+
+					<p> Customers want to know that they are doing business with another human being not with a computer. So we mainly focus on including all the local Kirana Shops in our website so that the customers will have their own trusted Kirana Shops at their service. Our website will just be the platform where with ease customers can order and buy products sitting at home just with a click from the shops they trust from their own locality.
+					Our main motive is to connect customer and shopkeepers through technology where things can move faster than the physical pace. </p>
+
+					<p> When you pay money for your groceries you want that money to be worth it and who can better make it count rather than your own Kirana Shop from where you usually buy your groceries so here we present you <%= link_to 'www.kiranastore.com', root_path %> </p>
+
+				</div>
+				
+				<div class="col-md-4 about-in">
+					<%= image_tag("brand.jpg", alt: "brands image", class: 'about-image') %>
+				</div>
+
+			<div class="clearfix"> </div>
+		</div>
+
+		<div class="about-bottom">
+			<div class="col-md-4 in-profile">
+				<h4> FACILITIES </h4>
+					<div class="col-in-about">
+						<span class="in-sed">1</span>
+							<div class="left-sit">
+								<h6> Trust Worthy People </h6>
+									<p> We connect you to your trusted Shopkeepers as per locality </p>
+							</div>
+							<div class="clearfix"> </div>
+					</div>
+					<div class="col-in-about">
+						<span class="in-sed">2</span>
+							<div class="left-sit">
+								<h6> <a href="<%= easy_registration_users_path %>"> Easy Registration </a> </h6>
+									<p> You can easily register with us either as a customer or shopkeeper and take up our facilities with ease </p>
+							</div>
+							<div class="clearfix"> </div>
+					</div>
+					<div class="col-in-about">
+						<span class="in-sed">3</span>
+							<div class="left-sit">
+								<h6> Home Delivery </h6>
+									<p> There will be free home delivery for you if you buy products worth more than Rs.500 per shop or shipping charges will be calculated with the bill which is set by the shopkeepers. We are no where associated dealing with the Shipping charges.</p>
+							</div>
+							<div class="clearfix"> </div>
+					</div>	
+					<div class="col-in-about">
+						<span class="in-sed">4</span>
+							<div class="left-sit">
+								<h6> No Online Payment </h6>
+									<p> We don't indulge ourselves in any kind of online payment after ordering products. Your shopkeeper will recieve the money from you while delivering products or through any other mode. Customers and Shopkeepers will have end to end connection in this. </p>
+							</div>
+							<div class="clearfix"> </div>
+					</div>
+			</div>	
+		</div>
+
+		<div class="col-md-8 in-profile">
+			<h4> OUR TEAM </h4>
+			<div class="team-left ">					
+				<div class=" team-top">
+					<h6> Ayush Jaiswal </h6>
+					<p> Intern Software Engineer </p>
+					<p> Mindfire Solutions </p>
+				</div>
+				<div class=" team-top ">
+					<h6> Bikram Sao </h6>
+					<p> Intern Software Engineer </p>
+					<p> Mindfire Solutions </p>
+				</div>
+				<div class=" team-top">
+					<h6> Saswati Mohanty </h6>
+					<p> Intern Software Engineer </p>
+					<p> Mindfire Solutions </p>
+				</div>
+				<div class=" team-top">
+					<h6> Vivek Kumar </h6>
+					<p> Intern Software Engineer </p>
+					<p> Mindfire Solutions </p>
+				</div>
+			</div>
+		</div>
+		<div class="clearfix"> </div>
+	</div>
+</div>

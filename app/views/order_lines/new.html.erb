@@ -1,0 +1,20 @@
+<% provide(:title, 'Select Address and Proceed') %>
+<h3> <center> Select Address and Proceed </center> </h3>
+
+	<%= form_tag({controller: :order_lines, action: 'create'}) do%>
+		
+		<div>
+			<%= link_to 'Add New Address', new_address_path, class: 'btn btn-primary' %>
+		</div>
+
+		<% current_user.addresses.each do |address| %>
+			<%= render(partial: 'address', locals: { f: address }) %>
+		<% end %>
+		
+		<% unless current_user.addresses.empty? %>
+			<div class="col-sm-11"> 
+				<%= submit_tag 'Confirm Order', class: 'btn btn-primary' %>
+			</div>
+		<% end %>	
+
+	<% end %>

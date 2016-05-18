@@ -1,0 +1,15 @@
+<% if ! @user.user_profile.nil? %>
+	<% if @user.user_profile.errors.any? %>
+	  <div class = "error_explanation">
+	    <%= @user.user_profile.errors.full_messages_for(:first_name).first %> <br/>
+	    <%= @user.user_profile.errors.full_messages_for(:last_name).first %> <br/>
+	    <%= @user.user_profile.errors.full_messages_for(:phone_number).first %> <br/>  
+	  </div>
+	<% end %>
+<% end %>
+
+<% if @user.errors.any? %>
+	<div class = "error_explanation">
+		<%= @user.errors.full_messages_for(:current_password).first %>  
+	</div>
+<% end %>

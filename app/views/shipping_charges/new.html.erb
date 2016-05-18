@@ -1,0 +1,40 @@
+<% provide(:title, 'Shipping Charges') %>
+<h4> Add New </h4>
+
+<div class = 'add_shipping_charge'>
+
+	<%= form_for @shipping_charge, url: shop_profile_shipping_charges_path(@shop) do |f|%>
+		<%= f.number_field :minimum_order_cost, required: true, placeholder: 'from', min: 1 %> To 
+		<%= f.number_field :maximum_order_cost, required: true, placeholder: 'upto', min: 1 %>
+		<%= f.number_field :shipping_cost , required: true, placeholder: 'Shipping Charge', min: 1 %>
+		<button type= 'submit' class="button_link"><i class="fa fa-plus-square "></i></button>
+	<% end %> 
+
+</div>
+<br>
+<% if @shipping_charges %>
+	<% @shipping_charges.order(:minimum_order_cost).each do |shipping_charge| %>
+		<div class = 'add_shipping_charge'>
+			
+			<%= form_for shipping_charge, url: shop_profile_shipping_charges_path(@shop) do |f|%>
+				<%= f.number_field :minimum_order_cost, required: true, placeholder: 'from', disabled: true%> To 
+				<%= f.number_field :maximum_order_cost, required: true, placeholder: 'upto', disabled: true %>
+				<%= f.number_field :shipping_cost, required: true, placeholder: 'Shipping Charge', disabled: true %>
+			<% end %>
+			<div class="edit_button">
+				<a href = <%= edit_shop_profile_shipping_charge_path(@shop,shipping_charge) %>  data-remote = 'true'>
+					<i class="fa fa-edit"></i>
+				</a>
+			</div>
+			<div class="delete_button">
+				<%= button_to(shipping_charge, method: :delete, data: { confirm: 'Are you sure to remove?' }, class: 'button_link') do %>
+					<i class="fa fa-minus-square font-light-red"></i>
+				<% end %>
+			</div>	
+		</div>
+		<br>
+	<% end %>
+<% end %>
+<div id="shipping-charge-modal" class="modal fade"></div>
+
+<%= link_to('Reset Shipping Charge', reset_shop_profile_shipping_charges_path(@shop), method: :get, data: { confirm: 'Are you sure to reset the shipping charges?' }, class: "btn btn-primary light-red") %>

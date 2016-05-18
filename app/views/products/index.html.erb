@@ -1,0 +1,73 @@
+<% provide(:title, 'Global Products') %>
+<div class="search-div"><!--header-bottom-->
+  <div class="container">
+    <div class="row">
+    	<div class="col-sm-9"></div>
+			<div class="col-sm-3">
+			  <div class="search_box pull-right">
+			    <%= form_tag products_path(shop_profile_id: @shop_profile.id), method: :get do %>
+			      <div class="input-group">
+			      	<%= hidden_field_tag "shop_profile_id", @shop_profile.id %>
+			        <%= text_field_tag :search, params[:search],class: "search-query form-control" ,
+    					placeholder: "Enter Product Name" %>
+			        <span class="input-group-btn">
+			          <button class="btn btn-danger" type="submit">
+			            <span class=" glyphicon glyphicon-search"></span>
+			          </button>
+			        </span>
+			      </div>
+			    <% end %>
+			  </div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<section>
+	<div class="container">
+		<div class="row">
+			<div class="col-sm-3">
+				<div class="left-sidebar">
+					<h2>Categories</h2>
+					<div class="panel-group category-products" id="accordian"><!--category-productsr-->
+						<div class="panel panel-default">
+							<div class="panel-heading">
+								<h4 class="panel-title">
+									<%= link_to 'All Products', products_path(shop_profile_id: @shop_profile.id) %>
+								</h4>
+							</div>
+						</div>
+						<% @products.select(:category_id).group(:category_id).each do |item| %>
+							<div class="panel panel-default">
+								<div class="panel-heading">
+									<h4 class="panel-title">
+										<%= link_to Category.find(item.category_id).category_name,
+						 					products_path(category_id: item.category_id, shop_profile_id: @shop_profile.id) , class: "#{cp(products_path(category_id: item.category_id, shop_profile_id: @shop_profile.id))}"%>
+									</h4>
+								</div>
+							</div>
+						<% end %>
+					</div>
+					<div class="col-sm-3"> <b> OR </b> </div>
+					<%= link_to 'Add Products to Shop Locally', new_shop_profile_shop_product_path(@shop_profile), class: 'btn btn-primary' %>
+						<!--/category-productsr-->
+				</div>
+			</div>
+			
+			<div class="col-sm-9 padding-right">
+				<div class="features_items"><!--features_items-->
+					<h2 class="title text-center">Features Items</h2>
+					<div id = "global-products">
+						<% if @items.present? %>
+							<%= render partial: 'item',collection: @items %>
+						<% else %>
+						  <h3><p>There are no items containing the term(s) <%= params[:search] %>.</p></h3>
+						<% end %>
+					</div>
+					<%= will_paginate @items%>
+				</div><!--features_items-->
+			</div>
+		</div>
+	</div>
+</section>

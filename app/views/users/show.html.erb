@@ -1,0 +1,32 @@
+<div>
+	<div class="col-md-6 col-md-offset-1">
+		<% if !@user.nil? %>
+		<h3>
+			<div>
+				First Name: <%= @user.user_profile.first_name %>
+			</div>
+			<% if !@user.user_profile.last_name.nil? %>
+				<div>
+					Last Name: <%= @user.user_profile.last_name %>
+				</div>
+			<% end %>
+			<div>
+				Email: <%= @user.email %>
+			</div>
+			<% if !@user.user_profile.phone_number.nil? %>
+				<div>
+					Phone: <%= @user.user_profile.phone_number %>
+				</div>
+			<% end %>
+			<% if !@user.user_profile.email.nil? %>
+				<div>
+					Secondary Email: <%= @user.user_profile.email %>
+				</div>
+			<% end %>
+			<div>
+				Role: <%= @user.role %>
+			</div>
+		</h3>
+	<% end %>
+	</div>
+</div>
