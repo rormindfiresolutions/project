@@ -5,7 +5,6 @@ class ShopProfilesController < ApplicationController
 	def new
 		authorize ShopProfile
 		@shop = ShopProfile.new
-		byebug
 	end
 
 	# For Displaying all The Shop Profiles
